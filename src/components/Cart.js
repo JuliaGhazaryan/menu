@@ -112,7 +112,7 @@ import StripeCheckout from 'react-stripe-checkout'
 //   )
 // }
 
-//copy
+//
 
 
 export const Cart = () => {
@@ -138,10 +138,10 @@ export const Cart = () => {
     const user = GetCurrentUser();
     // console.log(user);
     
-    // state of cart products
+    
     const [cartProducts, setCartProducts]=useState([]);
 
-    // getting cart products from firestore collection and updating the state
+   
     useEffect(()=>{
         auth.onAuthStateChanged(user=>{
             if(user){
@@ -161,38 +161,38 @@ export const Cart = () => {
 
     // console.log(cartProducts);
 
-       // getting the qty from cartProducts in a seperate array
+       
        const qty = cartProducts.map(cartProduct=>{
         return cartProduct.qty;
     })
 
-       // reducing the qty in a single value
+       
        const reducerOfQty = (accumulator, currentValue)=>accumulator+currentValue;
 
        const totalQty = qty.reduce(reducerOfQty,0);
    
        // console.log(totalQty);
 
-        // getting the TotalProductPrice from cartProducts in a seperate array
+        
     const price = cartProducts.map((cartProduct)=>{
         return cartProduct.TotalProductPrice;
     })
 
-    // reducing the price in a single value
+    
     const reducerOfPrice = (accumulator,currentValue)=>accumulator+currentValue;
 
     const totalPrice = price.reduce(reducerOfPrice,0);
 
-    // global variable
+
     let Product;
     
-    // cart product increase function
+   
     const cartProductIncrease=(cartProduct)=>{
         //console.log(cartProduct);
         Product=cartProduct;
         Product.qty=Product.qty+1;
         Product.TotalProductPrice=Product.qty*Product.price;
-        // updating in database
+        
         auth.onAuthStateChanged(user=>{
             if(user){
                 fs.collection('Cart ' + user.uid).doc(cartProduct.ID).update(Product).then(()=>{
@@ -205,13 +205,13 @@ export const Cart = () => {
         })
     }
 
-    // cart product decrease functionality
+   
     const cartProductDecrease =(cartProduct)=>{
         Product=cartProduct;
         if(Product.qty > 1){
             Product.qty=Product.qty-1;
             Product.TotalProductPrice=Product.qty*Product.price;
-             // updating in database
+           
             auth.onAuthStateChanged(user=>{
                 if(user){
                     fs.collection('Cart ' + user.uid).doc(cartProduct.ID).update(Product).then(()=>{
@@ -226,7 +226,7 @@ export const Cart = () => {
     }
 
     const [totalProducts, setTotalProducts]=useState(0);
-    // getting cart products   
+      
     useEffect(()=>{        
         auth.onAuthStateChanged(user=>{
             if(user){

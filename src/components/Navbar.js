@@ -31,7 +31,7 @@ export const Navbar = ({user, totalProducts}) => {
          
   <div><Link to="/" className='navlink'>{user}</Link></div>
   <div className="cart-menu-btn">
-    <Link className='navlink' to="cart">
+    <Link to="cart" className='navlink' >
       <Icon icon={shoppingCart} size={20}/>
     </Link>
     <span className='cart-indicator'>{totalProducts}</span>
